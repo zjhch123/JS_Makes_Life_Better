@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="" rel="stylesheet"/>
+    <style>
+      body {
+        height: 2000px;
+      }
+      .button {
+        position: relative;
+        background: #f72359;
+        padding: 12px 150px;
+        border: none;
+        color: white;
+        font-size: 22px;
+        cursor: pointer;
+        outline: none;
+        overflow: hidden;
+        border-radius: 100px;
+        transition: all .2s;
+      }
+      .button:hover {
+        transform: scale(1.03);
+        box-shadow: 0 5px 45px rgba(0,0,0,.6);
+      }
+      .button:active {
+        transform: scale(1);
+        box-shadow: none;
+      }
+      .text {
+        position: relative;
+        z-index: 3;
+      }
+      .button .gradient {
+        position: absolute;
+        display: block;
+        left: var(--x);
+        top: var(--y);
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle closest-side, #4405f7, transparent);
+        transform: translate(-50%, -50%);
+        transition: width .2s ease, height .2s ease;
+        pointer-events: none;
+      }
+      .button:hover .gradient {
+        width: 400px;
+        height: 400px;
+      }
+      .block {
+        --r: 0;
+
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(45deg, #4405f7, #f72359);
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        transform: rotate(var(--r));
+        transition: all .2s;
+      }
+      .block:hover {
+        transform: rotate(var(--r)) scale(1.1);
+        box-shadow: 0 5px 45px rgba(0,0,0,.6);
+      }
+    </style>
+  </head>
+  <body>
+    <button class="button">
+      <div class="text">Hover Me</div>
+      <div class="gradient"></div>
+    </button>
+    <div class="block"></div>
+    <script>
+      const button = document.querySelector('.button')
+      const gradient = document.querySelector('.gradient')
+      const block = document.querySelector('.block')
+      button.addEventListener('mousemove', (e) => {
+        const x = e.pageX - button.offsetLeft
+        const y = e.pageY - button.offsetTop
+        button.style.setProperty('--y', `${y}px`)
+        button.style.setProperty('--x', `${x}px`)
+      })
+
+      window.addEventListener('scroll', (e) => {
+        block.style.setProperty('--r', `${window.scrollY}deg`)
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src=""></script>
+  <style>
+  </style>
+</head>
+
+<body>
+
+</body>
+<script>
+const img = document.createElement('img')
+img.src = 'https://image.hduzplus.xyz/image/1507523489652.jpg'
+img.onload = function() { 
+  console.log(1)
+}
+const timeoutFunc = function() {
+  console.log(3)
+}
+setTimeout(timeoutFunc, 0)
+console.log(2)
+</script>
+</html>

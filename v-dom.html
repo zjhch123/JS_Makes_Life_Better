@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script>
+function Element(tagName, props, children) {
+  if (!(this instanceof Element)) {
+    return new Element(tagName, props, children);
+  }
+  if (Object.prototype.toString.call(this.props) === '[object Array]') {
+    children = props;
+    props = null;
+  }
+  this.tagName = tagName;
+  this.props = props || {};
+  this.children = children || [];
+  this.count = 0;
+  this.children.forEach(function(child) {
+    if (child instanceof Element) {
+      this.count += child.count;
+    } 
+    this.count ++;
+  }.bind(this));
+}
+
+function el(tagName, props, children) {
+  return new Element(tagName, props, children);
+}
+
+var ul = el('ul', {id: 'list'}, [
+  el('li', {class: 'item'}, ['Item 1']),
+  el('li', {class: 'item'}, ['Item 2']),
+  el('li', {class: 'item'}, ['Item 3']),
+  el('li', {class: 'item'}, ['Item 4']),
+  el('li', {class: 'item'}, [
+    el('p', {}, ['lalalala']),
+    el('span', {}, ['ooo~']),
+    el('h1', {}, ['haha'])
+  ])
+]);
+
+var ul2 = el('ul', {id: 'list'}, [
+  el('li', {class: 'item'}, ['Item 1']),
+  el('li', {class: 'item'}, ['Item 2']),
+  el('li', {class: 'item'}, ['Item 4']),
+  el('li', {class: 'item'}, [
+    el('p', {}, ['lalalala']),
+    el('span', {}, ['ooo~'])
+  ])
+]);
+
+Element.prototype.render = function() {
+  var el = document.createElement(this.tagName);
+  var props = this.props;
+  for (var key in props) {
+    if (props.hasOwnProperty(key)) {
+      el.setAttribute(key, props[key]);
+    }
+  } 
+  var children = this.children || [];
+  children.forEach(function(child) {
+    var childEl = child instanceof Element ? child.render() : document.createTextNode(child);
+    el.appendChild(childEl);
+  });
+  return el;  
+};
+
+var ulRoot = ul.render();
+document.body.appendChild(ulRoot);
+
+function dfsWalk(tree) {
+  if (tree instanceof Element) {
+    console.log(tree.tagName);
+    for (let i = 0; i < tree.children.length; i++) {
+      let newTree = tree.children[i];
+      dfsWalk(newTree);
+    }
+  } else {
+    console.log(tree);
+  }
+}
+
+dfsWalk(ul);
+
+</script>
+</html>

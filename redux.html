@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+  <div id='title'></div>
+  <div id='content'></div>
+</body>
+<script>
+function renderApp(appState, oldAppState = {}) {
+  if (appState === oldAppState) return;
+  console.log('render app');
+  renderTitle(appState.title, oldAppState.title);
+  renderContent(appState.content, oldAppState.content);
+}
+
+function renderTitle(title, oldTitle = {}) {
+  if (title === oldTitle) return;
+  console.log('render title');
+  const titleDOM = document.getElementById('title');
+  titleDOM.innerHTML = title.text;
+  titleDOM.style.color = title.color;
+}
+
+function renderContent(content, oldContent = {}) {
+  if (content === oldContent) return;
+  console.log('render content');
+  const contentDOM = document.getElementById('content');
+  contentDOM.innerHTML = content.text;
+  contentDOM.style.color = content.color;
+}
+
+function titleReducer (state, action) {
+  if (!state) {
+    return {
+      title: {
+        text: 'React.js 小书',
+        color: 'red',
+      },
+      content: {
+        text: '内容',
+        color: 'blue',
+      }
+    };
+  }
+  switch (action.type) {
+    case 'UPDATE_TITLE_TEXT':
+      return {
+        ...state,
+        title: {
+          ...state.title,
+          text: action.text
+        }
+      };
+    case 'UPDATE_TITLE_COLOR':
+      return {
+        ...state,
+        title: {
+          ...state.title,
+          color: action.color
+        }
+      };
+    default:
+      return state;
+  }
+}
+
+function createStore (reducer) {
+  let state = null;
+  const listeners = []
+  const subscribe = (listener) => listeners.push(listener);
+  const getState = () => state;
+  const dispatch = (action) => {
+    state = reducer(state, action);
+    listeners.forEach(listener => listener());
+  }
+  dispatch({type: '@@INIT'})
+  return { getState, dispatch, subscribe };
+}
+
+const store = createStore(titleReducer);
+
+let oldState = store.getState();
+store.subscribe(() => {
+  const newState = store.getState();
+  renderApp(newState, oldState);
+  oldState = newState;
+});
+renderApp(store.getState());
+
+setTimeout(() => {
+  store.dispatch({type: 'UPDATE_TITLE_COLOR', color: 'green'});
+  store.dispatch({type: 'UPDATE_TITLE_TEXT', text: '标题~'});
+}, 3000);
+</script>
+</html>

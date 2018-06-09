@@ -1,0 +1,30 @@
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  flex: none;
+  height: 64px;
+  line-height: 64px;
+  border: 1px solid gray;
+  text-align: center;
+}
+.main {
+  flex: auto;
+  display: flex;
+}
+.aside {
+  flex: 0 0 300px;
+  border: 1px solid black;
+}
+.container {
+  flex: 1;
+}
+.footer {
+  flex: none;
+  height: 64px;
+  line-height: 64px;
+  border: 1px solid gray;
+  text-align: center;
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    main {
+      min-height: calc(100% - 64px);
+    }
+
+    h2 {
+      margin: 0;
+    }
+
+    footer {
+      height: 64px;
+      text-align: center;
+      border: 1px solid black;
+      box-sizing: border-box;
+      line-height: 64px;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h2>Sticky Footer - calc</h2>
+    <p>使用calc实现，主视区域高度不变</p>
+    <a href="javascript:;" id="add">添加内容</a>
+  </main>
+  <footer>我是Footer</footer>
+</body>
+<script>
+  window.add.addEventListener('click', function () {
+    document.querySelector('main').innerHTML +=
+      `
+    <div class="append"><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p><p>123</p></div>
+  `
+  })
+</script>
+
+</html>

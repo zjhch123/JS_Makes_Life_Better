@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src=""></script>
+<style>
+.container {
+  border: 1px solid black;
+}
+.op {
+  height: 300px;
+  overflow: auto;
+  font-size: 14px;
+}
+p {
+  margin: 0;
+}
+</style>
+</head>
+<body>
+<div class="container container1">
+  <button>点赞</button>
+  <div class="op">
+  </div>
+</div>
+<div class="container container2">
+  <button>点赞</button>
+  <div class="op">
+  </div>
+</div>
+</body>
+<script>
+;(function() {
+  const container1 = document.querySelector('.container1');
+  const op = container1.querySelector('.op');
+  const func = function(e) {
+    op.innerHTML += '<p>点了一次赞</p>';
+  }
+  container1.querySelector('button').addEventListener('click', func);
+})();
+;(function() {
+  const container2 = document.querySelector('.container2');
+  const op = container2.querySelector('.op');
+  function throttle(func, timer) {
+    let preview = 0;    // 之前的时间戳
+    let context, args;
+    return function f() {
+      let now = +new Date(); // 现在的时间戳
+      context = this;
+      args = arguments;
+
+      if (now - preview > timer) {  // 如果差值大于程序设置的时间间隔，就执行函数
+        func.apply(context, args);
+        preview = now; // 更新之前的时间戳为现在的时间戳
+      }
+    }
+  }
+const func = function(e) {
+  op.innerHTML += '<p>点了一次赞</p>';
+}
+container2.querySelector('button').addEventListener('click', throttle(func, 400));
+})();
+</script>
+</html>
+
+

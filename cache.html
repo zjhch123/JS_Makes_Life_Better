@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+th {
+  width: 200px;
+}
+td {
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<h1>Cache</h1>
+<p></p>
+<span></span>
+<table>
+  <thead>
+    <th>
+      key
+    </th>
+    <th>
+      value
+    </th>
+    <th>
+      createdAt
+    </th>
+    <th>
+      usedAt
+    </th>
+    <th>
+      expire
+    </th>
+    <th>
+      timeoutId
+    </th>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</body>
+<script>
+
+/**
+{
+  key: {
+    key: key,
+    value: value,
+    createdAt: Long,
+    usedAt: Long,
+    expire: Long,
+    timeoutId: Integer
+  }
+}
+*/
+const Cache = function(maxSize, defaultExpire) {
+  if (typeof maxSize !== 'number') {
+    throw new Error('maxSize must be a Integer!')
+  }
+  maxSize = ~~maxSize
+  defaultExpire = defaultExpire * 60 * 1000 || 10 * 60 * 1000
+
+  const cache = window.CacheContainer = {}
+  let nowSize = 0
+
+  function __initItem__(key, value, expire) {
+    const now = Date.now()
+    return {
+      key: key,
+      value: value,
+      createdAt: now,
+      usedAt: now,
+      expire: expire || defaultExpire,
+      timeoutId: (function() {
+        return setTimeout(function() {
+          delete cache[key]
+          nowSize -= 1
+        }, expire || defaultExpire)
+      })()
+    }
+  }
+
+  function __findAndDeleteOutOfTimeItem__() {
+    let lastUsedAt = Date.now()
+    let outOfTimeItem = null
+    for (let key in cache) {
+      const item = cache[key]
+      if (item.usedAt < lastUsedAt) {
+        outOfTimeItem = item
+        lastUsedAt = outOfTimeItem.usedAt
+      }
+    }
+    __clearFromItem__(outOfTimeItem)
+    return outOfTimeItem
+  }
+
+  function __getItem__(key) {
+    return typeof cache[key] === 'undefined' ? null : cache[key]
+  }
+
+  function __get__(key) {
+    const item = __getItem__(key)
+    if (item === null) {
+      return null
+    }
+    item.usedAt = Date.now()
+    return item.value
+  }
+
+  function __set__(key, value, expire) {
+    const oldItem = __getItem__(key)
+    if (oldItem !== null) {
+      __clearFromItem__(oldItem)
+    }
+
+    const item = __initItem__(key, value, expire)
+    if (nowSize >= maxSize) {
+      __findAndDeleteOutOfTimeItem__()
+    }
+    cache[key] = item
+    nowSize += 1
+    return item
+  }
+
+  function __clearFromKey__(key) {
+    const item = __getItem__(key)
+    __clearFromItem__(item)
+  }
+
+  function __clearFromItem__(item) {
+    if (item !== null) {
+      clearTimeout(item.timeoutId)
+      nowSize -= 1
+      delete cache[item.key]
+    } 
+  }
+
+  function __clearAll__() {
+    for (let key in cache) {
+      __clearFromKey__(key)
+    }
+  }
+
+  function __getNowSize__() {
+    return nowSize
+  }
+
+  function __getMaxSize__() {
+    return maxSize
+  }
+
+  return {
+    get: __get__,
+    set: __set__,
+    getNowSize: __getNowSize__,
+    getMaxSize: __getMaxSize__,
+    clearFromKey: __clearFromKey__,
+    clearFromItem: __clearFromItem__,
+    clearAll: __clearAll__
+  }
+}
+
+const cache = Cache(10, 0.5)
+const tbody = document.querySelector('tbody');
+const p = document.querySelector('p');
+const span = document.querySelector('span');
+
+setInterval(() => {
+  let tpl = ''
+  for (let i in window.CacheContainer) {
+    let item = CacheContainer[i]
+    tpl += `
+      <tr>
+        <td>${item.key}</td>
+        <td>${item.value}</td>
+        <td>${new Date(item.createdAt).toLocaleString()}</td>
+        <td>${new Date(item.usedAt).toLocaleString()}</td>
+        <td>${item.expire / 60 / 1000}</td>
+        <td>${item.timeoutId}</td>
+      </tr>
+    `
+  }
+  tbody.innerHTML = tpl
+  p.innerHTML = `${cache.getNowSize()} / ${cache.getMaxSize()}`
+}, 80)
+
+function addItem() {
+  setTimeout(function() {
+    cache.set('' + Math.floor(Math.random() * 15), Math.floor(Math.random() * 1000));
+    addItem()
+  }, Math.random() * 2 * 1000)
+}
+addItem()
+
+let times = 0;
+let ok_times = 0;
+function getItem() {
+  setTimeout(function() {
+    times ++
+    let result = cache.get('' + Math.floor(Math.random() * 15))
+    if (result !== null) {
+      ok_times ++
+    }
+    span.innerHTML = `${ok_times} / ${times} - ${(ok_times / times * 100).toFixed(2)}%`
+    getItem()
+  }, Math.random() * 0.5 * 1000)
+}
+getItem()
+</script>
+</html>

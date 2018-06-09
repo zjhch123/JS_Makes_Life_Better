@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script>
+// 这种写法很糟糕，不喜欢这样写。
+// (function() {
+//   var callback = [];
+//   window.Promise = function(fn) {
+//     var resolve = function() {
+//       callback.shift().apply(this, arguments);
+//     };
+
+//     this.print = function() {
+//       console.log(callback);
+//     };
+
+//     this.then = function(cb) {
+//       callback.push(cb);
+//       return this;
+//     };
+
+//     fn(resolve);
+//     return this;
+//   }
+// })();
+
+
+var a = function() {
+  return new Promise(function(rev) {
+    setTimeout(function() {
+      console.log('执行a');
+      rev('a');
+    }, 2000);
+  });
+};
+
+var b = function() {
+  return new Promise(function(rev) {
+    setTimeout(function() {
+      console.log('执行b');
+      rev('b');
+    }, 2000);
+  });
+};
+
+var c = function() {
+  return new Promise(function(rev) {
+    setTimeout(function() {
+      console.log('执行c');
+      rev('c');
+    }, 2000);
+  });
+};
+
+var Promise = function(fn) {
+
+  var promise = this;
+  var value = null;
+  promise._resolve = [];
+  promise._status = 'PENDING';
+
+  this.then = function(onFulfilled) {
+    return new Promise(function(resolve) {
+      function handle(value) {
+        var ret = typeof onFulfilled == 'function' ? onFulfilled(value) : value;
+        if(ret && typeof ret['then'] == 'function') {
+          ret.then(function(value) {
+            resolve(value);
+          });
+        } else {
+          resolve(ret);
+        }
+      }
+      if(promise._status == 'PENDING') {
+        promise._resolve.push(handle);
+      } else if(promise._status == 'FULFILLED') {
+        handle(value);
+      }
+    });
+  };
+
+  this.print = function() {
+    console.log(promise._resolve);
+  }
+
+  var resolve = function(arg) {
+    setTimeout(function() {
+      promise._status = 'FULFILLED';
+      promise._resolve.forEach(function(callback) {
+        value = callback(arg);
+      })
+    }, 0);
+  };
+  fn(resolve);
+};
+
+
+a().then(function(data) {
+  console.log(data);
+  return b();
+}).then(function(data) {
+  console.log(data);
+  return c();
+}).then(function(data) {
+  console.log(data);
+});
+
+
+</script>
+</html>

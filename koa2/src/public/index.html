@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src=""></script>
+<style>
+.line {
+  width: 800px;
+  border: 1px solid black;
+  height: 30px;
+  font-size: 0;
+}
+.line .email, 
+.line .name {
+  width: 35%;
+  padding-left: 8px;
+}
+.gender {
+  text-align: center;
+  width: 10%;
+}
+.email,
+.name,
+.gender,
+.operation {
+  -webkit-user-select: none; 
+  display: inline-block;
+  line-height: 30px;
+  font-size: 14px;
+}
+.email, 
+.name, 
+.gender {
+  border-right: 1px solid black;
+  box-sizing: border-box;
+}
+.email input, 
+.name input, 
+.gender input {
+  width: 80%;
+}
+.operation {
+  text-align: center;
+  width: 20%;
+}
+.pop {
+  transform-origin: center center;
+  width: 300px;
+  padding: 30px 10px 20px ;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+  transition: all .6s;
+  box-sizing: border-box;
+  box-shadow: 0 0 20px rgba(0,0,0,.6);
+}
+.pop.hide {
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+}
+.pop .row span {
+  width: 90px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: right;
+}
+.pop .row input {
+  margin-left: 10px;
+  width: 140px;
+  outline: none;
+  box-sizing: border-box;
+}
+.pop .row:nth-child(4) {
+  margin-top: 8px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<a href="javascript:;" class="add">Add</a>
+<div class="container">
+</div>
+<div class="pop hide">
+  <div class="row">
+    <span>email</span>
+    <input type="text" name="email">
+  </div>
+  <div class="row">
+    <span>name</span>
+    <input type="text" name="name">
+  </div>
+  <div class="row">
+    <span>password</span>
+    <input type="password" name="password">
+  </div>
+  <div class="row">
+    <a href="javascript:;" class="submit-pop">提交</a>
+    <a href="javascript:;" class="close-pop">关闭</a>
+  </div>
+</div>
+<script>
+const container = document.querySelector('.container')
+const add = document.querySelector('.add')
+const pop = document.querySelector('.pop')
+const closePop = document.querySelector('.close-pop')
+const submitPop = document.querySelector('.submit-pop')
+fetch('/users').then((res) => res.json()).then((res) => {
+  container.innerHTML = res.result.users.map(user => {
+    return `
+    <div class="line" data-id="${user.id}">
+      <span class="email editable" data-attr="email">${user.email}</span>
+      <span class="name editable" data-attr="name">${user.name}</span>
+      <span class="gender editable" data-attr="gender">${user.gender ? '男' : '女'}</span>
+      <span class="operation"><a href="javascript:;" data-id="${user.id}">del</a></span>
+    </div>`
+  }).join('')
+})
+
+const fDoubleClick = function(func, timer) {
+  let timeInterval = 0
+  let count = 0;
+  return function() {
+    const self = this, args = arguments
+    count += 1
+    clearTimeout(timeInterval)
+    if (count === 2) {
+      count = 0
+      func.apply(self, args)
+      return
+    } 
+    timeInterval = setTimeout(function() {
+      count = 0
+    }, timer)
+  }
+}
+
+document.addEventListener('click', fDoubleClick(function(e) {
+  const eventObj = new CustomEvent('dbclick', {
+    bubbles: true,
+    cancelable: true,
+    detail: e,
+  })
+  e.target.dispatchEvent(eventObj)
+}, 300));
+document.addEventListener('keyup', function(e) {
+  if (e.keyCode == 13) {
+    const eventObj = new CustomEvent('keyup.enter', {
+      bubbles: true,
+      cancelable: true,
+      detail: e
+    })
+    e.target.dispatchEvent(eventObj)
+  }
+})
+Element.prototype.on = function(event, target, func) {
+  if (typeof func === 'undefined') {
+    func = target
+    target = null
+  }
+  const self = this;
+  self.addEventListener(event, function(e) {
+    let flag = false
+    if (target instanceof Element) {
+      flag = e.target == target
+    } else if (Object.prototype.toString.call(target) == '[object String]') {
+      flag = [].slice.call(this.querySelectorAll(target)).indexOf(e.target) != -1
+    } else {
+      flag = true
+    }
+    if (flag) {
+      func.apply(this, arguments)
+    }
+  })
+}
+Element.prototype.removeClass = function(className) {
+  this.classList.remove(className)
+}
+Element.prototype.addClass = function(className) {
+  this.classList.add(className)
+}
+
+container.on('click', '.operation a', function(e) {
+  const id = e.target.getAttribute('data-id')
+  fetch('/user/' + id, {
+    method: 'delete'
+  }).then(res => res.json())
+    .then(_ => window.location.reload())
+})
+add.on('click', function() {
+  pop.removeClass('hide')
+})
+closePop.on('click', function() {
+  pop.addClass('hide')
+})
+submitPop.on('click', function() {
+  let flag = true;
+  let data = [];
+  pop.querySelectorAll('input').forEach(ele => {
+    if (ele.value.trim() == '') {
+      ele.style.border = '1px solid red'
+      flag = false
+    } else {
+      ele.style.border = '1px solid green'
+      data.push(`${ele.getAttribute('name')}=${ele.value}`)
+    }
+  })
+  if (flag) {
+    fetch('/user', {
+      method: 'post',
+      body: data.join('&'),
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    }).then(res => res.json())
+      .then(_ => window.location.reload())
+  }
+})
+container.on('dbclick', '.editable', function(e) {
+  const value = e.target.innerHTML
+  e.target.innerHTML = `<input type="text" value="${value}" name="${e.target.getAttribute('data-attr')}" data-id="${e.target.parentNode.getAttribute('data-id')}">`
+  e.target.removeClass('editable')
+  e.target.querySelector('input').focus();
+})
+container.on('keyup.enter', 'input', function(e) {
+  const id = e.target.getAttribute('data-id')
+  const data = {
+    [e.target.name]: e.target.value
+  }
+  fetch(`/user/${id}`, {
+    method: 'put',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(data)
+  }).then(_ => {
+    e.target.parentNode.addClass('editable')
+    e.target.parentNode.innerHTML = e.target.value
+  })
+})
+</script>
+</body>
+</html>

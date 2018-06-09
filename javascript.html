@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+<body>
+<div class="d1">
+  <div class="d2">
+    <div class="d3">
+      <div class="d4"></div>
+      <div class="d5"></div>
+      <div class="d6"></div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+Function.prototype.method = function(name, func) {
+  if(!Function.prototype[name]) {
+    Function.prototype[name] = func;
+  }
+  return this;
+};
+
+if(typeof Object.create !== 'function') {
+  Object.create = function(o) {
+    var F = function() {};
+    F.prototype = o;
+    return new F();
+  };
+}
+
+var cat = {
+  name: 'cat',
+  say: function() {
+    console.log('mmm');
+  }
+};
+
+String.prototype.trim = function() {
+  return this.replace(/^\s+|\s+$/g, '');
+};
+
+var walk_the_DOM = function walk(node, func) {
+  func(node);
+  node = node.firstChild;
+  while(node) {
+    walk(node, func);
+    node = node.nextSibling;
+  }
+};
+
+var getElementByAttr = function(attr, val) {
+  var results = [];
+  walk_the_DOM(document.body, function(node) {
+    var value = node.nodeType === 1 && node.getAttribute(attr);
+    if(typeof value == 'string' && value == val) {
+      results.push(node)
+    }
+  });
+  return results;
+};
+
+var myObj = (function() {
+  var value = 0;
+  return {
+    increment: function(inc) {
+      value += typeof inc == 'Number' ? inc : 1;
+    },
+    getValue: function() {
+      return value;
+    }
+  };
+})()
+
+var quo = function(status) {
+  return {
+    get_status: function() {
+      return status;
+    },
+    add_status: function() {
+      status += 1;
+    }
+  }
+};
+
+var fade = function(node) {
+  var level = 1;
+  var step = function() {
+    var hex = level.toString(16);
+    node.style.backgroundColor = "#FFFF" + hex + hex;
+    if(level < 15) {
+      level += .5;
+      setTimeout(step, 50);
+    }
+  };
+  setTimeout(step, 50);
+};
+
+String.prototype.deentityify =  (function() {
+  var entity = {
+    lt: '<',
+    gt: '>',
+    quto: '"'
+  };
+
+  return function() {
+    return this.replace(/&([^&;]+);/g, function(a, b) {
+      var r = entity[b];
+      return typeof r === 'string' ? r : a;
+    });
+  };
+})();
+
+var memoizer = function(meno, func) {
+  var recur = function(n) {
+    var result = meno[n];
+    if(typeof result !== 'number') {
+      result = func(recur, n);
+      meno[n] = result;
+    }
+    return result;
+  }
+  return recur;
+};
+
+var fibonacci = memoizer([0, 1], function(recur, n) {
+  return recur(n - 1) + recur(n - 2);
+});
+
+var jc = memoizer([1, 1], function(recur, n) {
+  return n * recur(n - 1);
+});
+
+function myNew(func, args) {
+  var o = {};
+  o.__proto__ = func.prototype;
+  var ret = func.apply(o, args);
+  return typeof ret == 'object' ? ret : o;
+}
+
+function Fly(name) {
+  this.name = name;
+  return this;
+}
+
+Fly.prototype.drop = 'Drop!!';
+
+var fly = myNew(Fly, ['name']);
+
+var myMammal = {
+  name: 'Herb the mammal',
+  get_name: function() {
+    return this.name;
+  },
+  says: function() {
+    return this.saying || '';
+  }
+};
+
+var myCat = Object.create(myMammal);
+myCat.name = 'cat';
+
+
+var mammal = function(spec) {
+  var that = {};
+  that.get_name = function() {
+    return spec.name;
+  };
+  that.say = function() {
+    return spec.say || '';
+  }
+  return that;
+};
+
+var myMammal_ = mammal({name: 'mam'});
+
+var cat_ = function(spec) {
+  spec.say = 'meow';
+  var that = mammal(spec);
+  that.purr =  function(n) {
+    var i, s = '';
+    for(i = 0; i < n; i++) {
+      if(s) {
+        s += '-';
+      }
+      s += 'r';
+    }
+    return s;
+  };
+  that.get_name = function() {
+    return that.say() + ' ' + spec.name + ' ' + that.say();
+  }
+  return that;
+};
+
+var myCat_ = cat_({name: 'tom'});
+
+var Animal = function(name) {
+  this.name = 'Animal';
+  this.run = function() {
+    console.log('Animal run');
+  };
+};
+
+var Cat = function(name) {
+  this.name = name;
+  this.say = function() {
+    console.log('Cat say');
+  };
+};
+
+var F = new Function();
+F.prototype = Animal.prototype;
+Cat.prototype = new F();
+
+Cat.prototype.constructor = Cat;
+
+var ccc = new Cat('tom');
+
+var curryAdd = function(number) {
+  return function(number2) {
+    return number + number2;
+  }
+};
+
+</script>
+</html>
+
+
+

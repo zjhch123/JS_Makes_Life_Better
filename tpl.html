@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+.f-red {
+  color: red;
+}
+</style>
+</head>
+<body>
+
+</body>
+<script>
+  var tpl = '<div class="{red}">{obj.name}, {msg}, {arr[3]}, {arrWithObj[0][name]}, {objWithArr.arr[1]}</div>'
+  var data = {
+    msg: 'HelloWorld',
+    red: function() {
+      return 'f-red'
+    },
+    obj: {
+      name: 'lkh'
+    },
+    arr: [
+      'zero',
+      'one',
+      'two',
+      'three'
+    ],
+    arrWithObj: [
+      {
+        name: 'ypf'
+      },
+      {
+        name: 'zzy'
+      }
+    ],
+    objWithArr: {
+      arr: [
+        'orez',
+        'eno',
+        'owt'
+      ]
+    }
+  }
+  /* 完善后的最简单的模板引擎 */
+  function render(tpl, data) {
+    tpl = tpl.replace(/{.*?}/g, function(d) {
+      d = d.substring(1, d.length - 1);
+      if(d.split(/[\[.*?\]|\.]/).length == 1) {
+        return typeof data[d] == 'function' ? data[d]() : data[d];
+      } else {
+        var keys = d.split(/[\[.*?\]|\.]/);
+        var _data = data;
+        for(var i = 0; i < keys.length; i++) {
+          if(keys[i] != '' && keys[i].length != 0) {
+            _data = _data[keys[i]];
+          }
+        }
+        return typeof _data == 'function' ? _data() : _data;
+      }
+    })
+    return tpl;
+  }
+
+  document.body.innerHTML += render(tpl, data);
+</script>
+</html>
+
+

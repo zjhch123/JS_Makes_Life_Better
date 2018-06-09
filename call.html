@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<script>
+var value = 2
+ 
+var foo = {
+  value: 1,
+  test: 3
+}
+
+var bar = function(flag1, flag2) {
+  if (flag1 && flag2) {
+    console.log(this.value)
+  }
+  return this.test
+}
+
+Function.prototype.call2 = function(context) {
+  var context = context || window, 
+      args = [],
+      ret;
+  context.fn = this
+  for (var i = 1; i < arguments.length; i++) {
+    args.push(arguments[i])
+  }
+  ret = eval('context.fn(' + args.toString() + ')')
+  delete context.fn
+  return ret
+}
+
+Function.prototype.apply2 = function(context, arr) {
+  var context = context || window,
+      args = [],
+      ret;
+  context.fn = this
+  if (!arr) {
+    ret = context.fn()
+  } else {
+    for (var i = 0; i < arr.length; i++) {
+      args.push(arr[i])
+    }
+    ret = eval('context.fn(' + args.toString() + ')')
+  }
+  delete context.fn
+  return ret
+}
+
+Function.prototype.bind2 = function(context) {
+  var func = this
+  var args = [].slice.call(arguments, 1)
+  return function() {
+    args = args.concat(arguments);
+    return func.apply(context, args)
+  }
+}
+
+console.log(bar.call2(foo, true, true))
+console.log(bar.apply2(foo, [true, true]))
+console.log(bar.bind2(foo, true)(true))
+</script>
+</html>

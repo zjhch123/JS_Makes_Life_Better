@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<div id="wrapper">
+</div>
+</body>
+<script>
+const createDOMfromString = (domString) => {
+  const div = document.createElement('div');
+  div.innerHTML = domString;
+  return div;
+}
+
+const mount = (component, wrapper) => {
+  wrapper.appendChild(component._renderDOM());
+  component.onStateChange = (oldEl, newEl) => {
+    wrapper.insertBefore(newEl, oldEl);
+    wrapper.removeChild(oldEl);
+  }
+}
+
+class Component {
+  constructor(props = {}) {
+    this.props = props;
+  }
+  setState (state) {
+    const oldEl = this.el;
+    this.state = state;
+    this.el = this._renderDOM();
+    if (this.onStateChange) {
+      this.onStateChange(oldEl, this.el);
+    }
+  }
+
+  _renderDOM() {
+    this.el = createDOMfromString(this.render());
+    if (this.onClick) {
+      this.el.addEventListener('click', this.onClick.bind(this), false)
+    }
+    return this.el;
+  }
+}
+
+class LikeButton extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLiked: false
+    }
+  }
+  onClick() {
+    this.setState({
+      isLiked: !this.state.isLiked
+    })
+  }
+  render() {
+   return `
+      <button id='like-btn' style="background-color: ${this.props.bgColor}">
+        <span class='like-text'>${this.state.isLiked ? '取消' : '点赞'}</span>
+        <span>👍</span>
+      </button>
+    `
+  }
+}
+
+const wrapper = document.querySelector('#wrapper');
+
+const LikeButton1 = new LikeButton({bgColor: 'red'});
+mount(LikeButton1, wrapper);
+
+
+
+// EventEmitter
+class EventEmitter {
+  constructor() {
+    this.emitters = {};
+  }
+  on(eventName, func) {
+    if (Object.prototype.toString.call(this.emitters[eventName]) === '[object Array]') {
+      this.emitters[eventName].push(func);
+    } else {
+      this.emitters[eventName] = [func];
+    }
+  }
+  emit(eventName, ...arg) {
+    this.emitters[eventName] && this.emitters[eventName].forEach((emitter) => {
+      emitter.apply(this, arg);
+    });
+  }
+  off(eventName, func) {
+    this.emitters[eventName] && this.emitters[eventName].indexOf(func) !== -1 && this.emitters[eventName].splice(this.emitters[eventName].indexOf(func), 1);
+  }
+}
+
+const emitter = new EventEmitter()
+const sayHi = (name) => console.log(`Hello ${name}`)
+const sayHi2 = (name) => console.log(`Good night, ${name}`)
+
+emitter.on('hi', sayHi)
+emitter.on('hi', sayHi2)
+emitter.emit('hi', 'ScriptOJ')
+// => Hello ScriptOJ
+// => Good night, ScriptOJ
+
+emitter.off('hi', sayHi)
+emitter.emit('hi', 'ScriptOJ')
+// => Good night, ScriptOJ
+
+const emitter2 = new EventEmitter()
+emitter2.on('hi', (name, age) => {
+  console.log(`I am ${name}, and I am ${age} years old`)
+})
+emitter2.emit('hi', 'Jerry', 12)
+
+</script>
+</html>
+

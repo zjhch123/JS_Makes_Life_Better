@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+.dbclick {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+</style>
+</head>
+<body>
+  <div class="dbclick">双击666</div>
+</body>
+<script>
+const DoubleClick = function(fn, timer = 300) {
+  let timeoutId = 0
+  let count = 0
+  return function() {
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => count = 0, timer)
+    if (++count == 2) {
+      clearTimeout(timeoutId)
+      count = 0
+      fn.apply(this, [].slice.call(arguments))
+    }
+  }
+}
+
+document.addEventListener('click', DoubleClick(function(event) {
+  var e = new MouseEvent('dbclick', event);
+  event.target.dispatchEvent(e);
+}))
+
+// document.querySelector('.dbclick').addEventListener('click', DoubleClick(function(e) {
+//   console.log(e)
+//   console.log(this)
+// }))
+
+document.querySelector('.dbclick').addEventListener('dbclick', function(e) {
+  console.log('dbclick!')
+  console.log(e)
+  console.log(this)
+})
+
+</script>
+</html>

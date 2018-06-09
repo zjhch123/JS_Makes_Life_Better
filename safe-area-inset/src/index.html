@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+<style>
+html, body {
+  margin: 0;
+}
+.div {
+  width: 100%;
+  height: 300px;
+  background: gray;
+}
+footer {
+  height: calc(40px + env(safe-area-inset-bottom));
+}
+.fixed {
+  position: fixed;
+  bottom: env(safe-area-inset-bottom);
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: pink;
+}
+.fixed:after {
+  position: fixed;
+  bottom: 0px;
+  height: env(safe-area-inset-bottom);
+  background: red;
+  left: 0;
+  right: 0;
+  content: '';
+}
+</style>
+</head>
+<body>
+  <div class="div"></div>
+  <div class="div"></div>
+  <div class="div"></div>
+  <div class="div last"></div>
+  <footer>
+    <div class="fixed"></div>
+  </footer>
+</body>
+</html>

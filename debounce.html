@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+p {
+  margin: 0;
+}
+.container {
+  font-size: 0;
+  border: 1px solid gray;
+}
+.m-op {
+  font-size: 14px;
+  margin: 0;
+  height: 300px;
+  overflow: auto;
+}
+.m-tab {
+  display: table;
+}
+.u-tab {
+  display: inline-block;
+  width: 66px;
+  line-height: 28px;
+  text-align: center;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+<div class="container container1">
+  <div class="m-tab">
+    <a href="javascript:;" class="u-tab" data-attr="0">已使用</a>
+    <a href="javascript:;" class="u-tab" data-attr="1">可使用</a>
+    <a href="javascript:;" class="u-tab" data-attr="2">已失效</a>
+  </div>
+  <div class="m-op">
+  </div>
+</div>
+<div class="container container2">
+  <div class="m-tab">
+    <a href="javascript:;" class="u-tab" data-attr="0">已使用</a>
+    <a href="javascript:;" class="u-tab" data-attr="1">可使用</a>
+    <a href="javascript:;" class="u-tab" data-attr="2">已失效</a>
+  </div>
+  <div class="m-op">
+  </div>
+</div>
+</body>
+<script>
+;(function() {
+  const container = document.querySelector('.container1');
+  const op = container.querySelector('.m-op');
+
+  const func = function(e) {
+    const msg = e.target.innerText;
+    op.innerHTML += `<p>${msg}被点击了, 给后端发了一条查询请求</p>`;
+  }
+  container.querySelector('.m-tab').addEventListener('click', func);
+})();
+;(function() {
+  function debounce(func, timer) {
+    let timeoutId = 0; // 定时器id
+    let context,args
+    return function f() {
+      context = this; // 获取当前的this
+      args = arguments; // 获取传入的参数, event之类
+      clearTimeout(timeoutId); // 清除定时器
+      timeoutId = setTimeout(function() {
+        func.apply(context, args);
+      }, timer);
+    }
+  }
+  const container = document.querySelector('.container2');
+  const op = container.querySelector('.m-op');
+
+  const func = function(e) {
+    const msg = e.target.innerText;
+    op.innerHTML += `<p>${msg}被点击了, 给后端发了一条查询请求</p>`;
+  }
+  container.querySelector('.m-tab').addEventListener('click', debounce(func, 500));
+})();
+</script>
+</html>
+
+

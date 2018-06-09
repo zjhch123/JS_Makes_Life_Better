@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script>
+/*
+照猫画虎实现了一个简单的promise
+*/
+var Promise = function(fn) {
+  var promise = this;
+  var data = null;
+  promise.callbacks = [];
+  promise.status = 'PENDING';
+
+  var resolve = function(value) {
+    setTimeout(function() {
+      promise.status = 'FULFILLED';
+      promise.callbacks.forEach(function(callback) {
+        data = value = callback(value);
+      });
+    }, 0);
+  };
+
+  promise.then = function(callback) {
+    return new Promise(function(resolve) {
+      function callbackHandler(value) {
+        var ret = typeof callback == 'function' ? callback(value) : value;
+        if(ret && typeof ret['then'] == 'function') {
+          // 如果返回值是promise对象
+            // 这个then是会等ret执行完毕之后才调用的
+            // 这里的d是ret在执行过程中，ret调用resolve传进来的参数
+            // 下一行调用返回值的resolve是调用之后的then
+          ret.then(function(d) {
+            resolve(d);
+          });
+        } else {
+          resolve(ret);
+        }
+      }
+      if(promise.status == 'PENDING') {
+        promise.callbacks.push(callbackHandler);
+      } else if(promise.status == 'FULFILLED') {
+        data = callbackHandler(data);
+      }
+    });
+  };
+
+  fn(resolve);
+};
+
+var a = function() {
+  return new Promise(function(rev) {
+    setTimeout(function() {
+      console.log('执行a');
+      rev('a');
+    }, 2000);
+  });
+};
+
+var b = function() {
+  return new Promise(function(rev) {
+    setTimeout(function() {
+      console.log('执行b');
+      rev('b');
+    }, 2000);
+  });
+};
+
+var c = function() {
+  return new Promise(function(rev) {
+    setTimeout(function() {
+      console.log('执行c');
+      rev('c');
+    }, 2000);
+  });
+};
+
+a().then(function(data) {
+  return b();
+}).then(function() {
+  return c();
+}).then(function() {
+  console.log(1)
+});
+
+
+</script>
+</html>

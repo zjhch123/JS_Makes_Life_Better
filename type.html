@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src=""></script>
+<style>
+
+</style>
+</head>
+<body>
+
+</body>
+<script>
+
+const H = {
+  isString: (str) => {
+    return typeof str === "string"
+  },
+  isNumber: (number) => {
+    return typeof number === "number"
+  },
+  isBool: (bool) => {
+    return typeof bool === "boolean"
+  },
+  isUndefined: (val) => {
+    return typeof val === "undefined"
+  },
+  isNull: (val) => {
+    return val === null
+  },
+  // 使用 instanceof 判断最小类型以及自定义类型
+  isDate: (date) => {
+    return date instanceof Date
+  },
+  isReg: (reg) => {
+    return reg instanceof RegExp
+  },
+  isError: (err) => {
+    return err instanceof Error
+  },
+  isFunction: (func) => {
+    // 不适用于IE8及以下浏览器的DOM函数
+    return typeof func === "function"
+  },
+  isArray: (arr) => {
+    // 检测的是真数组而不是类数组
+    if (H.isFunction(Array.isArray)) {
+      return Array.isArray(arr)
+    } else {
+      return Object.prototype.toString.call(arr) === "[object Array]"
+    }
+  },
+  has: (obj, key) => {
+    if ("hasOwnProperty" in obj) {
+      return obj.hasOwnProperty(key)
+    } else {
+      return key in obj
+    }
+  }
+}
+
+class Person {
+  constructor() {
+    this.name = 'tom'
+    this.age = 18
+  }
+}
+var a = new Person()
+
+console.log(H.isFunction(a)) // false
+
+</script>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "Study JS 边读《Javascript语言精粹》边写的练习代码。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zjhch123/JS_Make_Life_Better.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zjhch123/JS_Make_Life_Better/issues"
+  },
+  "homepage": "https://github.com/zjhch123/JS_Make_Life_Better#readme",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "ramda": "^0.24.1"
+  }
+}

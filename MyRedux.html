@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div>
+      <p>
+        Clicked: <span id="value">0</span> times
+        <button id="increment">+</button>
+        <button id="decrement">-</button>
+        <button id="incrementIfOdd">Increment if odd</button>
+        <button id="incrementAsync">Increment async</button>
+      </p>
+    </div>
+    <script>
+      function counter(state, action) {
+        switch (action.type) {
+          case 'INCREMENT':
+            return state + 1
+          case 'DECREMENT':
+            return state - 1
+          default:
+            return state
+        }
+      }
+
+      var createStore = function(reducer, initialState) {
+        var registers = []
+        var state = initialState || 0
+        var subscribe = function(fn) {
+          registers.push(fn)
+        }
+        var dispatch = function(action) {
+          state = reducer(state, action)
+          registers.forEach((register) => register.call(this, state))
+        }
+        var getState = function() {
+          return state
+        }
+        return {
+          subscribe,
+          dispatch,
+          getState
+        }
+      }
+
+
+      var store = createStore(counter, 0)
+      var valueEl = document.getElementById('value')
+
+      function render() {
+        valueEl.innerHTML = store.getState().toString()
+      }
+
+      render()
+      store.subscribe(render)
+
+      document.getElementById('increment')
+        .addEventListener('click', function () {
+          store.dispatch({ type: 'INCREMENT' })
+        })
+      document.getElementById('decrement')
+        .addEventListener('click', function () {
+          store.dispatch({ type: 'DECREMENT' })
+        })
+      document.getElementById('incrementIfOdd')
+        .addEventListener('click', function () {
+          if (store.getState() % 2 !== 0) {
+            store.dispatch({ type: 'INCREMENT' })
+          }
+        })
+      document.getElementById('incrementAsync')
+        .addEventListener('click', function () {
+          setTimeout(function () {
+            store.dispatch({ type: 'INCREMENT' })
+          }, 1000)
+        })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+
+</body>
+<script>
+ 
+// 获取命名空间
+const H = {
+  namespace: (ns, container) => {
+    const packages = ns.split('.')
+    let parent = container || window
+    for (let i = 0; i < packages.length; i++) {
+      if (typeof parent[packages[i]] === 'undefined') {
+        parent[packages[i]] = {}
+      } 
+      parent = parent[packages[i]]
+    }
+    return parent
+  }
+}
+
+</script>
+</html>

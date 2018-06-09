@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+</body>
+<script>
+(function() {
+  var count = 0;
+  var result = {}
+  function task1() {
+    setTimeout(function() {
+      count ++
+      result.data1 = Math.random()
+      handle()
+    }, Math.random() * 1000)
+  }
+  function task2() {
+    setTimeout(function() {
+      count ++
+      result.data2 = Math.random()
+      handle()
+    }, Math.random() * 1000)
+  }
+  function task3() {
+    setTimeout(function() {
+      count ++
+      result.data3 = Math.random()
+      handle()
+    }, Math.random() * 1000)
+  }
+
+  task1()
+  task2()
+  task3()
+
+  function handle() {
+    if (count == 3) {
+      console.log(result)
+    }
+  }
+})()
+
+</script>
+</html>

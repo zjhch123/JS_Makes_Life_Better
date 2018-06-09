@@ -1,0 +1,253 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+</body>
+<script>
+// constructor
+
+var myNew = function(func, args) {
+  var obj = {}
+  obj.__proto__ = func.prototype
+  var result = func.call(obj, args)
+  return typeof result === 'object' ? result : obj
+}
+
+// Object.create1 = function(obj) {
+//   var F = function() {};
+//   F.prototype = obj;
+//   return new F(); 
+// }
+
+// module
+
+var counter = (function() {
+  var count = 0;
+  return {
+    increment: function() {
+      count += 1;
+      return count;
+    },
+    reset: function() {
+      console.log('count has been reset!');
+      count = 0
+      return count
+    }
+  }
+})()
+
+// Singleton
+
+var mySingleton = (function() {
+  var instance = null;
+  function init() {
+    var count = 0;
+    function publicIncrement() {
+      count += 1;
+      return count;
+    }
+    function publicReset() {
+      console.log('count has been reset!');
+      count = 0;
+      return count;
+    }
+    return {
+      increment: publicIncrement,
+      reset: publicReset
+    };
+  }
+  return {
+    getInstance: function() {
+      if(instance !== null) {
+        return instance;
+      }
+      instance = init()
+      return instance;
+    }
+  };
+})()
+
+// Observer
+function ObserverList() {
+  this.observerList = [];
+}
+
+ObserverList.prototype.Add = function(ob) {
+  this.observerList.push(ob);
+};
+
+ObserverList.prototype.Empty = function() {
+  this.observerList = [];
+};
+
+ObserverList.prototype.Count = function() {
+  return this.observerList.length;
+};
+
+ObserverList.prototype.Get = function(index) {
+  if(typeof index === 'number' && index > -1 && index < this.observerList.length) {
+    return this.observerList[index];
+  } else {
+    return null;
+  }
+};
+
+ObserverList.prototype.IndexOf = function(ob) {
+  return this.observerList.indexOf(ob);
+};
+
+ObserverList.prototype.RemoveIndexAt = function(index) {
+  this.observerList = this.observerList.splice(index, 1);
+  return this;
+}
+
+function Subject() {
+  this.observers = new ObserverList();
+}
+Subject.prototype.AddObserver = function(ob) {
+  this.observers.Add(ob);
+}
+Subject.prototype.RemoveObserver = function(ob) {
+  this.observers.RemoveIndexAt(this.observers.IndexOf(ob));
+}
+Subject.prototype.Notify = function(context) {
+  var count = this.observers.Count();
+  for(var i = 0; i < count; i += 1) {
+    this.observers.Get(i).Update(context);
+  }
+}
+
+function Observer(obj, UpdateCB) {
+  var F = function(){};
+  F.prototype = obj;
+  F.prototype.Update = UpdateCB;
+  return new F();
+}
+
+var school = new Subject();
+
+var cb = function(context) {
+  console.log(this.name + ' has receive message! message: ' + context);
+}
+
+var stu1 = Observer({
+  name: 'tom'
+}, cb);
+var stu2 = Observer({
+  name: 'jerry'
+}, cb);
+var stu3 = Observer({
+  name: 'kite'
+}, cb);
+
+school.AddObserver(stu1);
+school.AddObserver(stu2);
+school.AddObserver(stu3);
+
+school.Notify('今天交作业!');
+
+
+// my test
+function Publisher() {
+  this.registers = [];
+  return this;
+}
+
+Publisher.prototype.registe = function(method) {
+  var self = this;
+  self.registers.push(method);
+  return function() {
+    self.registers.splice(self.registers.indexOf(method), 1);
+  };
+}
+
+Publisher.prototype.notify = function() {
+  this.registers.forEach((func) => func.call());
+}
+
+var pub = new Publisher();
+
+function Subscriber(name) {
+  this.name = name;
+}
+
+Subscriber.prototype.render = function() {
+  console.log(this.name + ' has reveived msg!');
+}
+
+var sub1 = new Subscriber('1');
+var sub2 = new Subscriber('2');
+var sub3 = new Subscriber('3');
+
+var unsub1 = pub.registe(sub1.render.bind(sub1))
+var unsub2 = pub.registe(sub2.render.bind(sub2))
+var unsub3 = pub.registe(sub3.render.bind(sub3))
+
+
+// Mediator
+var mediator = (function() {
+  var topics = {};
+  var subscribe = function(topic, fn) {
+    if(!topics[topic]) {
+      topics[topic] = [];
+    }
+    topics[topic].push(fn);
+    return this;
+  };
+  
+  var publish = function(topic) {
+    var args;
+    if(!topics[topic]) {
+      return false;
+    }
+    args = [].slice.call(arguments, 1);
+    for(var i = 0;i < topics[topic].length; i += 1) {
+      var suber = topics[topic][i];
+      suber.apply(this, args);
+    }
+  }
+  return {
+    Publish: publish,
+    Subscribe: subscribe,
+    installTo: function(obj) {
+      obj.publish = publish;
+      obj.subscribe = subscribe;
+    }
+  }
+})();
+
+mediator.installTo(pub);
+pub.subscribe(1, sub1.render.bind(sub1));
+pub.subscribe(1, sub2.render.bind(sub2));
+pub.subscribe(1, sub3.render.bind(sub3));
+
+// Prototype
+var myCar = {
+  name: 'Ford',
+  drive: function() {
+    console.log(this.name + ' is driving')
+  }
+}
+var yourCar = Object.create(myCar);
+
+// Command
+
+var CarManager = {
+  requestInfo: function(model, id) {
+    return 'the infomation for ' + model + ' with id ' + id + 'is foobar';
+  },
+  buyVehical: function(model, id) {
+    return 'you have successfully purchased Item ' + id + ', a ' + model
+  }
+};
+
+CarManager.execute = function(name) {
+  return CarManager[name] && CarManager[name].apply(CarManager, [].slice.call(arguments, 1));
+};
+</script>
+</html>
+
+
+
+
