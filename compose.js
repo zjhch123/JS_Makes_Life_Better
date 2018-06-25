@@ -24,7 +24,6 @@ var compose = function(...arg) {
     return result;
   };
 };
-
 module.exports = {
   compose
 }
