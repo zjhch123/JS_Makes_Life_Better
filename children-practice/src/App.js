@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './App.css';
 import PropTypes from 'prop-types';
+
+import Portal from './Portal';
+
+
+const Text = ({children}) => (
+  <p>{children}</p>
+)
 
 class Tabs extends Component {
 
   static propTypes = {
     defaultActiveIndex: PropTypes.number
+  }
+
+  static defaultProps = {
+    defaultActiveIndex: 0
   }
 
   constructor() {
@@ -85,14 +97,23 @@ class TabPane extends Component {
   }
 }
 
+
 class App extends Component {
+  componentDidMount() {
+    this.node = ReactDOM.findDOMNode(this) // ReactDOM 方法
+  }
   render() {
     return (
-      <Tabs defaultActiveIndex={0} onChange={(order) => console.log(order)}>
-        <TabPane order={0} tab={'Tab1'}>Tab1 Content</TabPane>
-        <TabPane order={1} tab={'Tab2'}>Tab2 Content</TabPane>
-        <TabPane order={2} tab={'Tab3'}>Tab3 Content</TabPane>
-      </Tabs>
+      <div className="tabs">
+        <Tabs onChange={(order) => console.log(order)}>
+          <TabPane order={0} tab={'Tab1'}>Tab1 Content</TabPane>
+          <TabPane order={1} tab={'Tab2'}>Tab2 Content</TabPane>
+          <TabPane order={2} tab={'Tab3'}>Tab3 Content</TabPane>
+        </Tabs>
+        <Portal>
+          <Text>123</Text>
+        </Portal>
+      </div>
     );
   }
 }
