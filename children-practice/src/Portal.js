@@ -10,6 +10,12 @@ export default class Portal extends React.Component {
     }
     let children = this.props.children
     ReactDOM.unstable_renderSubtreeIntoContainer(this, children, this.node, () => {})
+  } 
+ 
+  componentWillUnmount() {
+    if (this.node) {
+      document.body.removeChild(this.node)
+    }
   }
 
   render() {

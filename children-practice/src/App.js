@@ -4,6 +4,7 @@ import './App.css';
 import PropTypes from 'prop-types';
 
 import Portal from './Portal';
+import Radio from './Radio';
 
 
 const Text = ({children}) => (
@@ -98,6 +99,7 @@ class TabPane extends Component {
 }
 
 
+
 class App extends Component {
   componentDidMount() {
     this.node = ReactDOM.findDOMNode(this) // ReactDOM 方法
@@ -110,6 +112,7 @@ class App extends Component {
           <TabPane order={1} tab={'Tab2'}>Tab2 Content</TabPane>
           <TabPane order={2} tab={'Tab3'}>Tab3 Content</TabPane>
         </Tabs>
+        <Radio/>
         <Portal>
           <Text>123</Text>
         </Portal>
