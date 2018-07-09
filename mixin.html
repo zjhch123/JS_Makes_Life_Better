@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src=""></script>
+    <link href="" rel="stylesheet"/>
+  </head>
+  <body>
+  </body>
+  <script>
+    const mixin = (obj, mixins) => {
+      const newObj = obj
+      newObj.prototype = obj.prototype
+      for(let key in mixins) {
+        if (mixins.hasOwnProperty(key)) {
+          newObj.prototype[key] = mixins[key]
+        }
+      }
+      return newObj
+    }
+
+    const Cat = function(name) {
+      this.name = name
+      console.log('meow...')
+    }
+
+    const animal = {
+      run: function() {
+        console.log(this.name + ' is running')
+      },
+      eat: function() {
+        console.log(this.name + ' is eating')
+      },
+    }
+
+    const AnimalCat = mixin(Cat, animal)
+    const cat1 = new AnimalCat('tom')
+    
+  </script>
+</html>
