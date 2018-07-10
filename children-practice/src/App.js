@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import './App.css';
 import PropTypes from 'prop-types';
 
 import Portal from './Portal';
@@ -19,6 +18,10 @@ class Tabs extends Component {
 
   static defaultProps = {
     defaultActiveIndex: 0
+  }
+
+  static contextTypes = {
+    color: PropTypes.string
   }
 
   constructor() {
@@ -76,12 +79,13 @@ class Tabs extends Component {
   }
 
   render() {
+    console.log(this.context.color)
     return (
       <div>
         <ul>
           { this.getTabOrder() }
         </ul>
-        <div>
+        <div style={{color: this.context.color}}>
           { this.getTabPanes() }
         </div>
       </div>
@@ -101,8 +105,19 @@ class TabPane extends Component {
 
 
 class App extends Component {
+
+  static childContextTypes = {
+    color: PropTypes.string
+  }
+
   componentDidMount() {
     this.node = ReactDOM.findDOMNode(this) // ReactDOM 方法
+  }
+
+  getChildContext() {
+    return {
+      color: 'red'
+    }
   }
   render() {
     return (
