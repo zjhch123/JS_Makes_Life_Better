@@ -17,7 +17,6 @@ export default class Portal extends React.Component {
       document.body.removeChild(this.node)
     }
   }
-
   render() {
     return null
   }
