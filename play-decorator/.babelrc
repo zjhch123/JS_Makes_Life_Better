@@ -1,0 +1,10 @@
+{
+  "presets": [
+    "env"
+  ],
+  "plugins": [
+    "add-module-exports",
+    "babel-plugin-transform-decorators-legacy"
+  ],
+  "comments": false
+}
