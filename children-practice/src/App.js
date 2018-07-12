@@ -10,6 +10,7 @@ const Text = ({children}) => (
   <p>{children}</p>
 )
 
+
 class Tabs extends Component {
 
   static propTypes = {
