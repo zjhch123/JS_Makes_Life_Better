@@ -4,7 +4,9 @@
   ],
   "plugins": [
     "add-module-exports",
-    "babel-plugin-transform-decorators-legacy"
+    "transform-runtime",
+    "transform-decorators-legacy",
+    "transform-class-properties"
   ],
   "comments": false
 }
