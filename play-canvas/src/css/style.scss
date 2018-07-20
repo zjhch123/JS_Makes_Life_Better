@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'sans';
+  src: url('../assets/fonts/sans.eot');
+  src: url('../assets/fonts/sans.eot?#iefix') format('embedded-opentype'), 
+  url('../assets/fonts/sans.woff') format('woff'), 
+  url('../assets/fonts/sans.ttf') format('truetype'), 
+  url('../assets/fonts/sans.svg#思源黑体-极细') format('svg');
+}
+html {
+  font-family: 'sans';
+  .logo {
+    background-image: url('../assets/images/logo.png');
+    width: 253px;
+    height: 109px;
+    display: block;
+    margin: auto;
+    background-size: 40% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
