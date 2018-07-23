@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      .ad {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #b2d235;
+        z-index: 1;
+      }
+      body {
+        margin: 0;
+      }
+      .list {
+        visibility: hidden;
+        position: relative;
+        z-index: 2;
+      }
+      .item {
+        display: block;
+        visibility: visible;
+      }
+      .empty {
+        height: 800px;
+      }
+      .item1 {
+        height: 800px;
+        background-color: #1a2933;
+      }
+      .item2 {
+        height: 800px;
+        background-color: #d64f44;
+      }
+      .item3 {
+        height: 850px;
+        background-color:#0c212b;
+      }
+      .item4 {
+        height: 1000px;
+        background-color: #6a6da9;
+      }
+      .item5 {
+        height: 1200px;
+        background-color: #585eaa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ad"></div>
+    <div class="list">
+      <div class="item item1"></div>
+      <div class="item item2"></div>
+      <div class="item item3"></div>
+      <div class="empty"></div>
+      <div class="item item4"></div>
+      <div class="item item5"></div>
+      <div class="item item6"></div>
+    </div>
+  </body>
+</html>
