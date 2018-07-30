@@ -1,0 +1,83 @@
+html {
+  font-size: 16px;
+  background-color: #e05e6d;
+  transition: background 1s;
+  .container {
+    max-width: 750px;
+    margin: auto;
+  }
+  .u-change {
+    position: fixed;
+    top: .5rem;
+    right: .5rem;
+    font-size: .3rem;
+    color: rgba(255,255,255,.7);
+    display: inline-block;
+    width: .9rem;
+    height: .9rem;
+    line-height: .9rem;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+  }
+  .container {
+    padding-top: 1.5rem;
+  }
+  .g-progress {
+    width: 7.5rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    .progress {
+      width: 6rem;
+    }
+  }
+  .g-info {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .u-info {
+      width: 5.5rem;
+      flex: 0 0 auto;
+      text-align: center;
+      .name {
+        font-size: .4rem;
+        color: white;
+      }
+      .sub {
+        font-size: .3rem;
+        color: rgba(255,255,255,.8);
+      }
+    }
+    .u-left, .u-right {
+      flex: 0 0 auto;
+      font-size: 0;
+      display: inline-block;
+      text-align: center;
+      width: .8rem;
+      height: .8rem;
+      svg {
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .u-right {
+      svg {
+        transform: rotate(180deg);
+        transform-origin: center center;
+      }
+    }
+  }
+  .g-control {
+    font-size: 0;
+    text-align: center;
+    margin-top: .7rem;
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
