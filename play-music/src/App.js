@@ -14,6 +14,8 @@ ctx.lineWidth = 6
 const cw = 750
 const ch = 1000
 
+window.AudioContext = window.AudioContext || window.webkitAudioContext || window.mozAudioContext || window.msAudioContext
+window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame
 
 const musicContext = new AudioContext()
 const music = new Audio(require('./1.mp3'))
@@ -37,6 +39,7 @@ const lineTo = (ctx, index, radius, value, direction = 1) => {
 
 
 function draw() {
+  // console.log(output)
   analyser.getByteFrequencyData(output)
   ctx.clearRect(0, 0, cw, ch)
   const currentTime = music.currentTime
