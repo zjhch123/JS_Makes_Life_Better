@@ -183,7 +183,6 @@ setInterval(() => {
   tbody.innerHTML = tpl
   p.innerHTML = `${cache.getNowSize()} / ${cache.getMaxSize()}`
 }, 80)
-
 function addItem() {
   setTimeout(function() {
     cache.set('' + Math.floor(Math.random() * 15), Math.floor(Math.random() * 1000));
