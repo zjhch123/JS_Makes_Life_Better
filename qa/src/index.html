@@ -1,0 +1,219 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>页面Title</title>
+  <link rel="icon" href="favicon.ico">
+  <meta charset="utf-8">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="telephone=no,email=no" name="format-detection">
+  <meta name="screen-orientation" content="portrait">
+  <meta name="x5-orientation" content="portrait">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <script type="text/javascript">
+    ! function () {
+      function a() {
+        if (parseInt(document.documentElement.clientWidth) > 768) {
+          document.documentElement.style.fontSize = 768 / 750 * 10 / 16 * 1000 + "%";
+        } else {
+          document.documentElement.style.fontSize = document.documentElement.clientWidth / 750 * 10 / 16 * 1000 + "%";
+        }
+      }
+      var b = null;
+      window.addEventListener("resize", function () {
+        clearTimeout(b);
+        b = setTimeout(a, 300);
+      }, !1);
+      a();
+    }(window);
+  </script>
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="./assets/images/logo.png" class="u-logo" />
+    <div class="m-tlt">
+      <p class="u-tlt">
+        联通XXXX<br/>
+        XXX调查问卷
+      </p>
+      <p class="u-sub">非常期待您能花几分钟回答我们的调查，将有5元电子券抽奖活动！</p>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">1. 您的姓名</div>
+      <div class="u-answer">
+        <input type="text" class="u-input" />
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">2. 您的联系手机号码</div>
+      <div class="u-answer">
+        <input type="text" class="u-input" />
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">3. 您所在的城市</div>
+      <div class="u-answer">
+        <select type="text" class="u-select">
+          <option>杭州</option>
+          <option>宁波</option>
+          <option>温州</option>
+          <option>绍兴</option>
+          <option>湖州</option>
+          <option>嘉兴</option>
+          <option>金华</option>
+          <option>衢州</option>
+          <option>台州</option>
+          <option>丽水</option>
+          <option>舟山</option>
+        </select>
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">4. 您家里上网使用的是哪家通信运营商的宽带？</div>
+      <div class="u-answer">
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio1" id="dx">
+          <label class="selected"></label>
+          <label class="text" for="dx">电信</label>
+        </div>
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio1" id="lt">
+          <label class="selected"></label>
+          <label class="text" for="lt">联通</label>
+        </div>
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio1" id="yd">
+          <label class="selected"></label>
+          <label class="text" for="yd">移动</label>
+        </div>
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio1" id="qt">
+          <label class="selected"></label>
+          <label class="text" for="qt">其他</label>
+        </div>
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio1" id="my">
+          <label class="selected"></label>
+          <label class="text" for="my">没装有线宽带</label>
+        </div>
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">5.	您家里的宽带业务和手机是一起缴费的吗？</div>
+      <div class="u-answer">
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio2" id="r2yes">
+          <label class="selected"></label>
+          <label class="text" for="r2yes">是</label>
+        </div>
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio2" id="r2no">
+          <label class="selected"></label>
+          <label class="text" for="r2no">否</label>
+        </div>
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio2" id="r2not">
+          <label class="selected"></label>
+          <label class="text" for="r2not">不方便透露</label>
+        </div>
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">6.	您家里现在使用的宽带将于什么时候到期？</div>
+      <div class="u-answer">
+        <input type="text" class="u-input" />
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">7.	您家现在的宽带速率是多少的？</div>
+      <div class="u-answer">
+        <input type="text" class="u-input" />
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">8.	您对现在的宽带服务是否满意？</div>
+      <div class="u-answer">
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio3" id="r3yes">
+          <label class="selected"></label>
+          <label class="text" for="r3yes">是</label>
+        </div>
+        <div class="u-radio">
+          <input type="radio" class="radio" name="radio3" id="r3no">
+          <label class="selected"></label>
+          <label class="text" for="r3no">否</label>
+        </div>
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">9.	联通能提供性价比更高的宽带服务，如您愿意选择，请在下面留下具体的安装地址。</div>
+      <div class="u-answer">
+        <input type="text" class="u-input" />
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">10.	您愿意为下列的哪些服务额外付费？</div>
+      <div class="u-answer">
+        <div class="u-checkbox">
+          <input type="checkbox" class="checkbox" name="checkbox1" id="checkbox1">
+          <label class="selected"></label>
+          <label class="text" for="checkbox1">家庭网络布线设计</label>
+        </div>
+        <div class="u-checkbox">
+          <input type="checkbox" class="checkbox" name="checkbox2" id="checkbox2">
+          <label class="selected"></label>
+          <label class="text" for="checkbox2">家庭无线网络质量检测</label>
+        </div>
+        <div class="u-checkbox">
+          <input type="checkbox" class="checkbox" name="checkbox3" id="checkbox3">
+          <label class="selected"></label>
+          <label class="text" for="checkbox3">家庭自购的路由器调试</label>
+        </div>
+        <div class="u-checkbox">
+          <input type="checkbox" class="checkbox" name="checkbox4" id="checkbox4">
+          <label class="selected"></label>
+          <label class="text" for="checkbox4">家庭其它智能联网设备调试</label>
+        </div>
+        <div class="u-checkbox">
+          <input type="checkbox" class="checkbox" name="checkbox5" id="checkbox5">
+          <label class="selected"></label>
+          <label class="text" for="checkbox5">智能电视机顶盒调试</label>
+        </div>
+        <div class="u-checkbox">
+          <input type="checkbox" class="checkbox" name="checkbox6" id="checkbox6">
+          <label class="selected"></label>
+          <label class="text" for="checkbox6">无</label>
+        </div>
+      </div>
+    </div>
+    <div class="m-question f-must">
+      <div class="u-tlt">11.	点击你喜欢的礼品</div>
+      <div class="u-answer">
+        <div class="u-radio-image">
+          <input type="radio" class="radio" name="radio4" id="r4goods1">
+          <label class="selected"></label>
+          <label class="text" for="r4goods1">
+            <img src="http://yanxuan.nosdn.127.net/ca41653b8d8c6b6a65a96597d8a21ad7.jpg?imageView&thumbnail=430x430&quality=95"/>
+          </label>
+        </div>
+        <div class="u-radio-image">
+          <input type="radio" class="radio" name="radio4" id="r4goods2">
+          <label class="selected"></label>
+          <label class="text" for="r4goods2">
+            <img src="http://yanxuan.nosdn.127.net/66f93d087d02619d2f93ea1bb829b2a0.jpg?imageView&thumbnail=430x430&quality=95"/>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="m-submit">
+      <a href="javascript:;" class="u-submit"></a>
+    </div>
+  </div>
+  <script type="text/javascript" src="./js/index.js"></script>
+</body>
+</html>
