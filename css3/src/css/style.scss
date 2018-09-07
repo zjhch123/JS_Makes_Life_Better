@@ -1,0 +1,10 @@
+html {
+  font-family: '微软雅黑';
+ 
+  .u-data {
+    &:after {
+      content: attr(data-content)
+    }
+  }
+
+}

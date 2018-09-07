@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+</style>
+</head>
+<body>
+<div class="container">
+  <p>假的双向绑定</p>
+  <a class="u-data" href="javascript:;" data-content=""></a><br>
+  <input type="text" id="input" style="border: 1px solid black">
+  <a href="javascript:;" class="change">修改</a>
+</div>
+</body>
+<script>
+document.querySelector('#input').addEventListener('input', () => {
+  const content = window.input.value
+  document.querySelector('.u-data').setAttribute('data-content', content)
+})
+</script>
+</html>
