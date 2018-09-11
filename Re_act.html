@@ -13,7 +13,6 @@ const createDOMfromString = (domString) => {
   div.innerHTML = domString;
   return div;
 }
-
 const mount = (component, wrapper) => {
   wrapper.appendChild(component._renderDOM());
   component.onStateChange = (oldEl, newEl) => {
