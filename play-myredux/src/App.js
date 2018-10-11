@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from './react-redux'
 
+import { getNews } from './actions/news'
+
 class App extends Component {
 
   componentDidMount() {
@@ -10,7 +12,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="App">
         <header className="App-header">
@@ -26,13 +27,13 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  list: state.list
+const mapStateToProps = ({ news }) => ({
+  list: news.list
 })
 
 const mapDispatchToProps = (dispatch) => ({
   add() {
-    dispatch({ type: 'ADD', payload: { list: [1, 2, 3, 4, 5] } }) 
+    dispatch(getNews())
   }
 })
 

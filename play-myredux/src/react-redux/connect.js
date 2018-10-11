@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { bindActionCreators } from './bindActionCreators';
+import bindActionCreators from './bindActionCreators';
 
 export default (mapStateToProps = (state) => state, mapDispatchToProps = {}) => (WrapperComponent) => {
   return class extends React.Component {
