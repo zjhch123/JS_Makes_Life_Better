@@ -1,0 +1,42 @@
+<html>
+<script>
+  const optc = (a) => Object.prototype.toString.call(a)
+
+  const isNumber = (a) => optc(a) === '[object Number]'
+  const isString = (a) => optc(a) === '[object String]'
+  const isBoolean = (a) => optc(a) === '[object Boolean]'
+  const isArray = (a) => optc(a) === '[object Array]'
+  const isObject = (a) => optc(a) === '[object Object]'
+  const obj = {
+    user: {
+      name: 'james',
+      age: 1,
+      likes: [ '1', '2', '3' ],
+    },
+    dog: {
+      name: 'cat',
+      eat: {
+        food: 'fish',
+        drink: 'water'
+      }
+    }
+  }
+
+  let result = {}
+
+  const walkObject = (root, prefix) => {
+    Object.keys(root).forEach((key) => {
+      if (isObject(root[key])) {
+        walkObject(root[key], prefix + key)
+      } else {
+        result[prefix + key] = root[key]
+      }
+    })
+  }
+
+  walkObject(obj, '')
+  console.log(result)
+
+
+</script>
+</html>
