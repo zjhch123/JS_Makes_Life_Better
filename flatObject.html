@@ -8,35 +8,54 @@
   const isArray = (a) => optc(a) === '[object Array]'
   const isObject = (a) => optc(a) === '[object Object]'
   const obj = {
-    user: {
-      name: 'james',
-      age: 1,
-      likes: [ '1', '2', '3' ],
-    },
-    dog: {
-      name: 'cat',
-      eat: {
-        food: 'fish',
-        drink: 'water'
+    "Aidan Gillen": {
+      "array": ["Game of Thron\"es", "The Wire"],
+      "string": "some string",
+      "int": 2,
+      "aboolean": true,
+      "boolean": true,
+      "object": {
+        "foo": "bar",
+        "object1": {
+          "new prop1": "new prop value"
+        },
+        "object2": {
+          "new prop1": "new prop value"
+        },
+        "object3": {
+          "new prop1": "new prop value"
+        },
+        "object4": {
+          "new prop1": "new prop value"
+        }
       }
-    }
+    },
+    "Amy Ryan": {
+      "one": "In Treatment",
+      "two": "The Wire"
+    },
+    "Annie Fitzgerald": ["Big Love", "True Blood"],
+    "Anwan Glover": ["Treme", "The Wire"],
+    "Alexander Skarsgard": ["Generation Kill", "True Blood"],
+    "Clarke Peters": null
   }
 
   let result = {}
 
-  const walkObject = (root, prefix) => {
+  const handlePrefix = (a, b) => [a, b].join(a === '' ? '' : '.')
+
+  const walkObject = (root, prefix = '') => {
     Object.keys(root).forEach((key) => {
       if (isObject(root[key])) {
-        walkObject(root[key], prefix + key)
+        walkObject(root[key], handlePrefix(prefix, key))
       } else {
-        result[prefix + key] = root[key]
+        result[handlePrefix(prefix, key)] = root[key]
       }
     })
   }
 
-  walkObject(obj, '')
+  walkObject(obj)
   console.log(result)
-
-
 </script>
+
 </html>
