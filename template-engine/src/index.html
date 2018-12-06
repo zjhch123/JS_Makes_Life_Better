@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+.container {
+  text-align: center;
+  width: 600px;
+  margin: auto;
+}
+p {
+  margin: 0 8px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+</div>
+<script type="x-template" class="J_template">
+    <%for (var i = 0; i < users.length; i++) {%>
+      <div>
+        <a href="<%=users[i].url%>">
+          <%=users[i].name + '<br>'%>
+        </a>
+      </div>
+    <%}%>
+</script>
+</body>
+</html>
