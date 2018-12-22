@@ -57,6 +57,6 @@ const connect = (data) => {
     client
   })
 })({
-  id: '1533277836647',
+  id: '1545486864691',
   host: 'https://blog.hduzplus.xyz'
 })
