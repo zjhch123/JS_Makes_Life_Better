@@ -56,6 +56,7 @@ const connect = (data) => {
     article,
     client
   })
+  console.log(result)
 })({
   id: '1545486864691',
   host: 'https://blog.hduzplus.xyz'
