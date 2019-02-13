@@ -1,0 +1,100 @@
+html {
+  background: #ECECEC;
+  .container {
+    padding: 8px;
+    font-size: 0;
+  }
+  .manage {
+    font-size: 16px;
+  }
+  .card {
+    font-size: 16px;
+    display: inline-block;
+    width: 300px;
+    height: 200px;
+    margin: 8px;
+    background: white;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 8px;
+    transition: box-shadow .4s;
+    &:hover {
+      box-shadow: 2px 2px 8px #9c9c9c;
+    }
+    &.active {
+      transition: transform .4s;
+    }
+  }
+  .item {
+    width: 300px;
+    height: 60px;
+    display: block;
+    margin: 8px;
+    border-radius: 8px;
+    &.item0 {
+      background: #005344;
+    }
+    &.item1 {
+      background: #df9464;
+    }
+    &.item2 {
+      background: #27342b;
+    }
+    &.item3 {
+      background: #65c294;
+    }
+    &.item4 {
+      background: #a03939;
+    }
+    &.item5 {
+      background: #a3cf62;
+    }
+    &.item6 {
+      background: #fcaf17;
+    }
+    &.item7 {
+      background: #892f1b;
+    }
+    &.item8 {
+      background: #6b2c25;
+    }
+    &.item9 {
+      background: #733a31;
+    }
+    &.active {
+      transition: all .6s;
+    }
+  }
+  .images {
+    display: flex;
+    align-items: flex-end;
+    .image {
+      display: block;
+      &.image1 {
+        width: 200px;
+        height: 300px;
+        background: #005831;
+      }
+      &.image2 {
+        width: 100px;
+        height: 400px;
+        background: #853f04;
+      }
+      &.image3 {
+        width: 400px;
+        height: 200px;
+        background: #c37e00;
+      }
+      &.image4 {
+        width: 90px;
+        height: 150px;
+        background: #78cdd1;
+      }
+      &.image5 {
+        width: 400px;
+        height: 400px;
+        background: #afdfe4;
+      }
+    }
+  }
+}

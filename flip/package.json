@@ -1,0 +1,23 @@
+{
+  "name": "Emiya_webapp",
+  "version": "1.0.0",
+  "description": "由脚手架Emiya创建的项目",
+  "main": "App.js",
+  "scripts": {
+    "build": "emiya-scripts build",
+    "dev": "emiya-scripts dev",
+    "eject": "emiya-scripts eject"
+  },
+  "keywords": [
+    "webpack",
+    "emiya",
+    "bootstrap",
+    "launcher"
+  ],
+  "author": "zjhch123<416836508@qq.com>",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "emiya-scripts": "^1.1.0"
+  }
+}
