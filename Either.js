@@ -64,7 +64,3 @@ console.log(zoltar({birthdate: 'abc'}));
 
 
 
-
-
-
-
