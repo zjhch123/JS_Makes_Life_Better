@@ -1,7 +1,6 @@
 function isPromise(func) {
   return 'then' in func && typeof func.then === 'function'
 }
-
 function thunkToPromise(fn) {
   return new Promise((resolve, reject) => {
     fn((err, res) => {
