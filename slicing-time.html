@@ -1,0 +1,40 @@
+<html>
+  <body>
+    <i></i>
+  </body>
+  <script>
+    class TaskInit {
+      constructor(sliceCount, callback) {
+        this.generator = this.sliceQueue(sliceCount, callback)
+        this.next()
+      }
+
+      *sliceQueue(sliceCount, callback) {
+        for (let i = 0; i < sliceCount; i++) {
+          const now = performance.now()
+          callback(i)
+          while (performance.now() - now < 16.7) {
+            yield
+          }
+        }
+      }
+
+      next() {
+        const { generator } = this
+        const start = performance.now()
+        let res = null
+
+        do {
+          res = generator.next()
+        } while (!res.done && performance.now() - start < 16.7)
+
+        if (res.done) return
+        requestAnimationFrame(this.next.bind(this))
+      }
+    }
+
+    new TaskInit(99999, function(i) {
+      console.log(i)
+    })
+    </script>
+</html>
