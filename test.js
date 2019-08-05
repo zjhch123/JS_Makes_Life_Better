@@ -1,7 +1,6 @@
 
 // * [[0, 0], [2, 0]]
 // G [[0, 4], [3, 1], [3, 3]]
-
 const test = (b) => {
   const row = b.length
   const column = b[0].length
