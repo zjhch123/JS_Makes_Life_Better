@@ -12,7 +12,6 @@ console.log(add1(9));
 var add10 = add(10);
 console.log(add10(9));
 
-
 var addmult = curry(function(a,b,c) {
   return a + b * c;
 });
