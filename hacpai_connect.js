@@ -5,7 +5,6 @@ const _ajax = (url, cb, opt) => {
     success: cb
   }, opt))
 }
-
 const getArticle = ({
   id,
   host
