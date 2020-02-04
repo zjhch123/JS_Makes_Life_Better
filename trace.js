@@ -6,3 +6,4 @@ var trace = curry(function(tag, x) {
 module.exports = {
   trace
 };
+
