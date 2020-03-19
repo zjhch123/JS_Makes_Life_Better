@@ -5,8 +5,9 @@ const conn = net.connect({
   host: '127.0.0.1',
   port: 8888
 }, () => {
-  for (let i = 0; i < 10000; i++) {
-    conn.write(BB.pack(Buffer.from('6666' + i, 'utf-8')).toBuffer())
+  for (let i = 0; i < 300; i++) {
+    setTimeout(() => {
+      conn.write(BB.pack(Buffer.from('66666666666666666666666666' + i, 'utf-8')).toBuffer())
+    }, i * 200);
   }
-  conn.end()
 })
