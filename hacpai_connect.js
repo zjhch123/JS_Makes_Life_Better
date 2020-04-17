@@ -60,4 +60,3 @@ const connect = (data) => {
   id: '1545486864691',
   host: 'https://blog.hduzplus.xyz'
 })
-
