@@ -1,17 +1,9 @@
 class BB {
-  /**
-   * 
-   * @param {Buffer} b 
-   */
   constructor(b = null) {
     this.length = b ? b.length : 0;
     this.content = b ? b : null;
   }
 
-  /**
-   * 
-   * @param {Buffer} b buffer
-   */
   encode(b) {
     this.length = b.length;
     this.content = b;
