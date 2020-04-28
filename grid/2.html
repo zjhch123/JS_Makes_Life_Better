@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      .wrapper {
+        height: 300px;
+        width: 700px;
+        display: grid;
+        grid-template-columns: 200px 200px 200px;
+        border: 1px solid green;
+        margin-bottom: 20px;
+      }
+      .wrapper.row {
+        height: auto;
+        grid-template-rows: 200px 200px 200px 100px 100px;
+        grid-template-columns: none;
+      }
+      .wrapper.fr {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .wrapper.fr2 {
+        grid-template-columns: 500px 1fr 2fr;
+      }
+      .wrapper.fr3 {
+        grid-template-columns: 300px repeat(3, 1fr) 200px;
+      }
+      .wrapper > div {
+        border: 1px solid red;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="item1">1</div>
+      <div class="item2">2</div>
+      <div class="item3">3</div>
+      <div class="item4">4</div>
+      <div class="item5">5</div>
+    </div>
+    <div class="wrapper row">
+      <div class="item1">1</div>
+      <div class="item2">2</div>
+      <div class="item3">3</div>
+      <div class="item4">4</div>
+      <div class="item5">5</div>
+    </div>
+    <div class="wrapper fr">
+      <div class="item1">1</div>
+      <div class="item2">2</div>
+      <div class="item3">3</div>
+      <div class="item4">4</div>
+      <div class="item5">5</div>
+    </div>
+    <div class="wrapper fr2">
+      <div class="item1">1</div>
+      <div class="item2">2</div>
+      <div class="item3">3</div>
+    </div>
+    <div class="wrapper fr3">
+      <div class="item1">1</div>
+      <div class="item2">2</div>
+      <div class="item3">3</div>
+      <div class="item4">4</div>
+      <div class="item5">5</div>
+    </div>
+  </body>
+</html>
