@@ -1,6 +1,5 @@
 const Index = (() => {
   const a = []
-
   for (let i = 0; i < 64; i++) {
     if (i < 26) {
       a.push(String.fromCharCode('A'.charCodeAt() + i))
