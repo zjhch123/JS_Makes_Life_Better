@@ -1,5 +1,4 @@
 class Main extends WorkFlow {
-
   @workflow('query_money')   // 会发出 before_query_money 和 after_query_money 事件
   queryMoney() {
     doQueryMoney()
