@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <script type="text/javascript" compress="no-compress">
+    !function(){
+        function a(){
+            if(parseInt(document.documentElement.clientWidth) > 720) {
+                document.documentElement.style.fontSize=720/750*10/16*1000+"%";
+            } else {
+                document.documentElement.style.fontSize=document.documentElement.clientWidth/750*10/16*1000+"%";
+            }
+        }
+        var b=null;
+        window.addEventListener("resize",function(){
+            clearTimeout(b);
+            b=setTimeout(a,300);
+        },!1);
+        a();
+    }(window);
+  </script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+    }
+    @keyframes rotate {
+      from {
+        transform: rotate(0);
+      }
+      to {
+        transform: rotate(360deg)
+      }
+    }
+    @keyframes float {
+      from {
+        transform: translateY(0)
+      }
+      to {
+        transform: translateY(-80vh);
+      }
+    }
+    @keyframes hueRotate {
+      100% {
+        filter: contrast(15);
+      }
+    }
+    @keyframes larger {
+      from {
+        border-radius: 42% 38% 62% 49% / 45%;
+      }
+      to {
+        border-radius: 50%;
+      }
+    }
+    @keyframes small {
+      from {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      to {
+        transform: translate(-50%, -50%) scale(0);
+      }
+    }
+    .container {
+      position: relative;
+      width: 7.5rem;
+      height: 100vh;
+      margin: auto;
+      filter: contrast(15) hue-rotate(0);
+      animation: hueRotate 10s infinite linear;
+      background: #000;
+      overflow: hidden;
+    }
+    .circle {
+      width: 5rem;
+      height: 5rem;
+      position: absolute;
+      left: 50%;
+      top: .5rem;
+      margin-left: -2.5rem;
+      filter: blur(.1rem);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: rotate 10s linear infinite;
+    }
+    .circle::after {
+      width: 4rem;
+      height: 4rem;
+      background: #00ff6f;
+      display: block;
+      position: relative;
+      content: '';
+      border-radius: 42% 38% 62% 49% / 45%;
+      animation: 60s larger linear forwards;
+    }
+    .circle::before {
+      width: 3.52rem;
+      height: 3.52rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: black;
+      z-index: 2;
+      content: '';
+      border-radius: 50%;
+      animation: 60s small linear forwards;
+    }
+    .bubbles {
+      position: absolute;
+      width: 3rem;
+      height: 3rem;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      bottom: -2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00ff6f;
+      filter: blur(.1rem);
+    }
+    .item {
+      background: #00ff6f;
+      animation-name: float;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      border-radius: 50%;
+      position: absolute;
+      top: .6rem;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="circle"></div>
+      <div class="bubbles"></div>
+    </div>
+  </body>
+  <script>
+    const bubbltCount = 15;
+    const bubbles = Array(15).fill(0).map(() => {
+      const div = document.createElement('div')
+      const width = 15 + Math.random() * 20;
+      div.classList.add('item')
+      
+      div.style.width = width / 50 +'rem'
+      div.style.height = width / 50 + 'rem'
+      div.style.animationDuration = Math.random() * 10 + 5 + 's'
+      div.style.animationDelay = -1 * (Math.random() * 5 + 2) + 's'
+      div.style.left = (20 + Math.random() * 100) / 50 + 'rem'
+      return div
+    })
+    document.querySelector('.bubbles').append(...bubbles)
+  </script>
+</html>
