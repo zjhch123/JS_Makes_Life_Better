@@ -14,4 +14,3 @@ const getUserInfo = ((res) => () => {
 getUserInfo().then(info => {
   console.log(info)
 })
-
