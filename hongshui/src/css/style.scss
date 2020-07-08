@@ -1,0 +1,30 @@
+body {
+  background: url('../assets/images/bg.jpg');
+  width: 100vw;
+  height: 100vh;
+  background-size: auto 150vh;
+  background-repeat: no-repeat;
+  background-position: center center;
+  font-size: 16px;
+}
+.container {
+  background: rgba(0, 0, 0, .4);
+  height: 100vh;
+  width: 100vw;
+  padding: 1rem .4rem 0;
+  box-sizing: border-box;
+  margin: auto;
+  text-align: center;
+  font-size: .8rem;
+  color: white;
+  .p {
+    margin-top: .6rem;
+  }
+}
+
+#number {
+  font-size: 1.4rem;
+  color: red;
+  font-weight: bolder;
+  font-family: "Courier New";
+}
