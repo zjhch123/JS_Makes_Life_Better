@@ -1,29 +1,50 @@
 body {
-  background: url('../assets/images/bg.jpg');
   width: 100vw;
   height: 100vh;
-  background-size: auto 150vh;
-  background-repeat: no-repeat;
-  background-position: center center;
   font-size: 16px;
 }
 .container {
-  background: rgba(0, 0, 0, .4);
+  background: url('../assets/images/bg.jpg');
+  background-size: auto 150vh;
+  background-repeat: no-repeat;
+  background-position: center center;
   height: 100vh;
   width: 100vw;
-  padding: 1rem .4rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  &:after {
+    position: fixed;
+    z-index: 2;
+    background: rgba(0,0,0,.5);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    content: '';
+  }
+}
+.content {
+  position: relative;
+  z-index: 3;
+  color: white;
+  padding: 1rem .4rem 1rem;
   box-sizing: border-box;
   margin: auto;
   text-align: center;
   font-size: .8rem;
-  color: white;
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
   .p {
     margin-top: .6rem;
   }
 }
-
-#number {
+#number, #earth, #sun {
   font-size: 1.4rem;
+  height: 1.8rem;
+  line-height: 1.8rem;
   color: red;
   font-weight: bolder;
   font-family: "Courier New";
