@@ -10,7 +10,7 @@ const 泄洪速度 = 7800 * 1000 * 1000; // 速度是7800立方米/秒
 const 开始时间 = new Date(2020, 6, 8, 9, 0, 0).getTime(); // 2020年7月8日09:00:00
 
 const 获取实时瓶数 = () => {
-  const 现在 = Date.now();
+  const 现在 = new Date(2020, 6, 9, 19, 0, 0).getTime(); // 2020年7月8日09:00:00;
 
   const 持续秒数 = (现在 - 开始时间) / 1000;
 
@@ -26,7 +26,7 @@ const 设置分享 = () => {
   const 瓶数 = 获取实时瓶数();
   window.wxShare.setShareData({
     title: '泄洪水量实时对比',
-    desc: `没想到, 竟然已经泄了${Math.floor(瓶数 / 100000000)}亿瓶农夫山泉了!`,
+    desc: `没想到, 总共泄了${Math.floor(瓶数 / 100000000)}亿瓶农夫山泉!`,
     link: window.location.href,
   });
 };
