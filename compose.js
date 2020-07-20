@@ -27,3 +27,4 @@ var compose = function(...arg) {
 module.exports = {
   compose
 }
+
