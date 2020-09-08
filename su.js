@@ -48,3 +48,4 @@ const superBaby = function(name) {
 }
 
 superBaby('tom').sleepFirst(5).sleep(3).eat('banana')
+
